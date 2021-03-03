@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login & Registration Form</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="newfile/css/style.css">
+</head>
+<body>
+	<div class="hero">
+		<div class="form-box">
+			<div class="button-box">
+				<div id="btn"></div>
+				<button type="button" class="toggle-btn" onclick="login()">Log In</button>
+				<button type="button" class="toggle-btn" onclick="register()">Register</button>
+			</div>
+		
+			<div class="soical-icons">
+				<a href="#"><i class="fa fa-facebook-square  fa-6"></i></a>
+				<a href="#"><i class="fa fa-google-plus-square fa-6"></i></a>
+				<a href="#"><i class="fa fa-twitter-square fa-6"></i></a>
+			</div>
+
+			<form id="login" class="input-group" action="login-done" method="post">
+				<input type="text" class="input-field" placeholder="Email" name="email" required />
+				<input type="password" class="input-field" placeholder="Enter Password" name="password" required />
+				<input type="checkbox" class="check-box" /><span>Remember Password</span>
+				<button type="submit" class="submit-btn">Log In</button>
+			</form>
+
+			<form id="register" class="input-group" onsubmit="sendotp(event.preventDefault())">
+				<input type="text" class="input-field" placeholder="name" name="name" id="reg_name" required />
+				<input type="email" class="input-field" placeholder="Enter Email" name="email" id="reg_email"  required />
+				<input type="password" class="input-field" placeholder="Enter Password" name="password" id="reg_pass"  required />
+				<input type="password" class="input-field" placeholder="Enter Confirm Password" name="confirm_password" id="reg_con_pass" required />
+				
+				<input type="checkbox" class="check-box" /><span>I agree to the terms & conditions</span>
+				<button type="submit" class="submit-btn">Register</button>
+			</form>
+			<form id = "otp" onsubmit="verifyOtp()">
+				<input type="text" placeholder="otp" id="input_otp" />
+				<button type="submit">Verify</button>
+			</form>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
+	<script>
+		$('#otp').hide();
+		var x = document.getElementById("login");
+		var y = document.getElementById("register");
+		var z = document.getElementById("btn");
+
+		function register() {
+			x.style.left = "-400px";
+			y.style.left = "50px";
+			z.style.left = "110px";
+		}
+
+		function login() {
+			x.style.left = "50px";
+			y.style.left = "450px";
+			z.style.left = "0";
+		}
+		let name ,email,password;
+
+		function sendotp(){
+			name = $("#reg_name").val();
+			email = $("#reg_email").val();
+			password = $("reg_pass").val();
+			$.post('/send-otp-user',{name:$("#reg_name").val(),email:$("#reg_email").val(),password:$("#reg_pass").val(),confirm_password:$("#reg_con_pass").val()},({msg})=>{
+				console.log(msg);
+				if(msg == 'otp send to email'){
+					$('#register').hide();
+					$('#otp').show();
+				}
+				else{
+					alert("Email already exists");
+					window.location="/user";
+				}
+			})
+		}
+
+		function verifyOtp(){
+			// e.preventDefault();
+			$.post('/register-done',{name:$("#reg_name").val(),email:$("#reg_email").val(),password:$("#reg_pass").val(),otp:$("#input_otp").val()},({msg})=>{
+				if(msg == 'wrong Otp')
+			{
+				alert("Wrong Otp");
+				$('#register').hide();
+					$('#otp').show();
+			}
+			})
+		}
+
+	</script>
+</body>
+</html>

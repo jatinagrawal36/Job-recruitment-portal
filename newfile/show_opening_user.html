@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Openings</title>
+    <style>
+        .apply_btn{
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            width: 100px;
+            height: 30px;
+            font-size: 20px;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body onload="myfunction(event.preventDefault())" style="    background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));">
+    <div>
+        <h1 style="text-align: center;">All New Openings</h1>
+    </div>
+    <div style="display: flex; ">
+
+        <ol id='UL' style="font-size: 20px;font-family: monospace;"></ol>
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
+    <script type="text/javascript">
+     function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+         function myfunction(){
+            var e = decodeURIComponent(getCookie('gmail'));
+            $.post('/get_all_opening',{name:e},({msg})=>{
+                    console.log(msg);
+                    if(msg=='No Opening')
+                    {
+
+                    }
+                    else{
+                        for(var i=0;i<msg.length;i++)
+                        {
+                             var data=msg[i];
+                             var comapanyName=$('<li class="name">');
+                             var jobname=$('<p class="jobname">');
+                             var stipend=$('<p class="stipend">');
+                                var expreq=$('<p class="expreq">');
+                                var skills=$('<p class="skills">');
+                                    let Apply = $('<button/>', {
+                            text: "Apply",
+                            id: 'apply_btn_' + i,
+                            class: 'apply_btn'
+                        });    
+                            comapanyName.text("Company Name: "+data.companyName);
+                            jobname.text("Job Name: "+data.jobName);
+                            stipend.text("Stipend: "+data.stipend+"(Per Month)");
+                            expreq.text("Exp. Req.: "+data.expReq);
+                            skills.text("Skills Req.: "+data.skillsReq);
+
+                           // comapanyName.append(comapanyName);
+                            comapanyName.append(jobname);
+                            comapanyName.append(stipend);
+                            comapanyName.append(expreq);
+                            $('#UL').append(comapanyName);
+                            $('#UL').append(Apply);
+                            
+                            
+                        }
+
+                    }
+                })
+            }
+
+    </script>
+</body>
+
+</html>

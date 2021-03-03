@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon</title>
+    <style>
+        body{
+            background: linear-gradient(rgb(104, 177, 104),white);
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            font-family: Arial;
+        }
+
+        #btn1 {
+            width: 100px;
+            height: 40px;
+            background: rgb(113, 160, 192);
+            border: 5px solid grey;
+        }
+
+        #btn2 {
+            width: 130px;
+            height: 40px;
+            background: rgb(113, 160, 192);
+            border: 5px solid grey;
+           
+        }
+
+        #btn3 {
+            width: 100px;
+            height: 40px;
+            background:  rgb(113, 160, 192);
+            border: 5px solid grey;
+            float: right;
+          
+        }
+    </style>
+</head>
+
+<body onload="myfunction(event.preventDefault())">
+
+    <div class="navbar">
+        <form action="/home1" method="post">
+            <button type="submit" id="btn1">Home</button>
+            <button formaction="/openings" formmethod="GET" type="submit" id='btn2'>New Opening</button>
+            <button formaction="/logout-comp" formmethod="get" type="submit" id='btn3'>Logout</button>    
+        </form>
+               
+
+    </div>
+    
+    <h1 id="name"></h1>
+
+    <h2 style="background-color: blueviolet;color: white;text-align: center;">
+        New Openings
+    </h2>
+    <div>
+        <ol class="ol_data" style="font-size: 20px;"> 
+        </ol>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function myfunction() {
+            var e = decodeURIComponent(getCookie('gmail'));
+            var name=decodeURIComponent(getCookie('CompanyName'));
+            console.log(e);
+            $.post('/get-opening', { email: e}, ({ msg }) => {
+                if(msg)
+                {
+                    $('#name').text("Welcome To "+name);
+                    for(i=0;i<msg.length;i++)
+                    {
+
+                        var data=msg[i];
+                        let companyData=$('<li class="companydata">');
+                            let jobtile=$('<p>');
+                                jobtile.text("JobName is "+data.jobName);
+                                let skill=$('<p>');
+                                    skill.text("skills Required is "+data.skillsReq);
+                            companyData.text("Comapany Name is "+data.companyName);
+                            companyData.append(jobtile);
+                            companyData.append(skill);
+                            $('.ol_data').append(companyData);
+                        console.log(data.companyName);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon</title>
+    <style>
+        body {
+            background: linear-gradient(rgb(75, 82, 184), rgb(224, 169, 169));
+        }
+
+        .navbar {
+            overflow: hidden;
+            font-family: Arial;
+        }
+
+        #btn1 {
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px ;
+
+        }
+
+        #btn2 {
+            width: 130px;
+            height: 40px;
+            
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px ;
+        }
+
+        #btn3 {
+            width: 100px;
+            height: 40px;
+          
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px;
+            float: right;
+        }
+
+        .welcome {
+            color: white;
+        }
+
+        .subs_btn {
+            
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        .unsubs_btn {
+           
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            margin: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body onload="myfunction(event.preventDefault())">
+
+    <div class="navbar">
+            
+        <form action="/home" method="post">
+            <button type="submit" id="btn1" formmethod="get" formaction="/user">Home</button>
+            <button formaction="/show_opening_user" formmethod="get" type="submit" id='btn2'>New Openings</button>
+            <button formaction="/logout-user" formmethod="GET" type="submit" id='btn3'>Logout</button>
+        </form>
+
+    </div class='welcome'>
+    <h1 id="username"></h1>
+    <div>
+        <ol class="ol_data"></ol>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function myfunction() {
+            var e = decodeURIComponent(getCookie('gmail'));
+            var e1 = decodeURIComponent(getCookie('UserName'));
+            $('#username').text("Welcome, " + e1);
+
+            $.post('/company-list', { email: e }, ({ msg }) => {
+                if (msg) {
+                    for (i = 0; i < msg.length; i++) {
+                        var data = msg[i];
+                        var name1 = data.name;
+                        let companyData = $('<li class="companydata" style="color:white;font-size:40px;">');
+                        let subscribe = $('<button/>', {
+                            text: "subscribe",
+                            id: 'subs_btn_' + i,
+                            click: function () {
+                                if ($(this).text() == "subscribe") {
+                                    name1= msg[this.id[this.id.length - 1]].name ;
+                                    $.post('/subscribeClick', { name1 }, ({ msg1 }) => {
+                                        console.log(name1);
+                                        if (msg1 == "subscribed") {
+                                            $(this).text(msg1);
+                                            $("#un" + this.id).text("Unsubscribe");
+                                            $("#un" + this.id).prop('disabled', false);
+                                       
+                                        }
+                                    });
+                                } else {
+                                    $(this).prop('disabled', true);
+                                }
+                            },
+                            class: 'subs_btn'
+                        });
+
+                        let unsubscribe = $('<button/>', {
+                            text: "unsubscribed",
+                            id: 'unsubs_btn_' + i,
+                            click: function () {
+                                if ($(this).text() == "Unsubscribe") {
+                                    name1= msg[this.id[this.id.length - 1]].name ;
+                                    $.post('/unsubscribeClick', { name1 }, ({ msg1 }) => {
+                                        if (msg1 == "unsubscribed") {
+                                            $(this).text(msg1);
+                                            $('#subs_btn_' + this.id[this.id.length - 1]).text("subscribe");
+                                            $('#subs_btn_' + this.id[this.id.length - 1]).prop('disabled', false);
+                                        }
+                                    });
+                                }
+                                else {
+                                    $(this).prop('disabled', true);
+                                }
+                            },
+                            class: 'unsubs_btn'
+                        });
+                        companyData.text(data.name);
+                        $('.ol_data').append(companyData);
+                        $('.ol_data').append(subscribe);
+                        $('.ol_data').append(unsubscribe);
+
+                    }
+                }
+            })
+        }
+
+        function Home(){
+            var e = decodeURIComponent(getCookie('gmail'));
+            $.post('/home',{e},({msg})=>{
+                
+            })
+        }
+    </script>
+</body>
+
+</html>
