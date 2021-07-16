@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Openings</title>
+    <title>User Portfolio</title>
     <style>
-       body{
+        body{
             background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+       
         }
         input[type=text], select, textarea{
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+       ;
   border-radius: 4px;
   box-sizing: border-box;
   resize: vertical;
@@ -32,14 +34,15 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  float: right;
+  display: grid;
+  margin: auto;
 }
 
 /* Style the container */
 .container {
   border-radius: 5px;
- 
-  padding: 20px;
+  background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+        padding: 20px;
 }
 
 /* Floating column for labels: 25% width */
@@ -47,13 +50,12 @@ input[type=submit] {
   float: left;
   width: 25%;
   margin-top: 6px;
-  font-size: 18px;
 }
 
 /* Floating column for inputs: 75% width */
 .col-75 {
   float: left;
-  width: 75%;
+  width: 50%;
   margin-top: 6px;
 }
 
@@ -71,109 +73,98 @@ input[type=submit] {
     margin-top: 0;
   }
 }
-.navbar {
-            overflow: hidden;
-            background-color:rgb(30 104 83);
-            font-family: Arial;
-        }
 
-        #btn1 {
-            width: 100px;
-            height: 40px;
-            background:linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            border-radius: 5px;
-        }
-
-        #btn3 {
-            width: 100px;
-            height: 40px;
-            background:linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            border-radius: 5px;
-            float: right;
-          
-        }
     </style>
 </head>
 <body>
-  
-  <div class="navbar">
-    <form action="/company" method="post" id="opening">
-        <button type="submit" id="btn1" formmethod="GET">Home</button> 
-        <button formaction="/logout-comp" formmethod="get" type="submit" id='btn3'>Logout</button>    
-    </form>
-</div>
     <div class="container">
-        <form action="/newopen_comp" method="POST" autocomplete="off">
-          
-          
+        <form action="/portfolio_submit" method="POST" id="portfolio" autocomplete="off">
+
           <div class="row">
             <div class="col-25">
-              <label for="comapnyname">Company Name </label>
+              <label for="email">Email </label>
             </div>
             <div class="col-75">
-              <input type="text" id="companyName" name="companyname" placeholder="Comapny Email.." required>
+              <input type="text" id="email" name="email" placeholder="Enter your Email.." required>
             </div>
           </div>
 
 
           <div class="row">
             <div class="col-25">
-              <label for="comapnyemail">Company Email </label>
+              <label for="bio">Bio</label>
             </div>
             <div class="col-75">
-              <input type="text" id="companyEamil" name="companyemail" placeholder="Comapny Email.." required>
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col-25">
-              <label for="jobname">Job Name</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="jobName" name="jobname" placeholder="Job name.." required>
+              <input type="text" id="bio" name="bio" placeholder="Add your bio.." required>
             </div>
           </div>
 
           <div class="row">
             <div class="col-25">
-              <label for="jobrole">Job Role </label>
+              <label for="skill_1">Skill_1 </label>
             </div>
             <div class="col-75">
-              <input type="text" id="jobRole" name="jobrole" placeholder="Job Role...." required>
-            </div>
-          </div>
-
-          
-          <div class="row">
-            <div class="col-25">
-              <label for="skillsRequired">Skills Required</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="skillsRequired" name="skillsrequired" placeholder="Skills Required.." required>
+              <input type="text" id="skill_1" name="skill_1" placeholder="Add your skill 1...." required>
             </div>
           </div>
 
           <div class="row">
             <div class="col-25">
-              <label for="expreq">Experience Required</label>
+              <label for="skill_2">Skill_2 </label>
             </div>
             <div class="col-75">
-              <input type="text" id="expreq" name="expreq" placeholder="Experienced Required.." required>
+              <input type="text" id="skill_2" name="skill_2" placeholder="Add your skill 2...." required>
             </div>
           </div>
 
           <div class="row">
             <div class="col-25">
-              <label for="stipend">Stipend</label>
+              <label for="skill_3">Skill_3 </label>
             </div>
             <div class="col-75">
-              <input type="number" id="stipend" name="stipend" placeholder="Expected Stipend.." required>
+              <input type="text" id="skill_3" name="skill_3" placeholder="Add your skill 3...." required>
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-25">
+              <label for="experience">Experience</label>
+            </div>
+            <div class="col-75">
+                <select id="experience" name="experience">
+                 <option  value="fresher" selected>Fresher</option>
+                  <option  value="2_years">1-2 years</option>
+                  <option  value="3_5_years">3-5 Years</option>
+                  <option  value="5_10_years">5-10 Years</option>
+                </select></div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="college">College</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="college" name="college" placeholder="Enter Your college.." required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="degree">Degree</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="degree" name="degree" placeholder="Enter Your degree.." required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="last_job">Last Job (If any)</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="last_job" name="last_job" placeholder="Enter Your last job(if Any).." required>
+            </div>
+          </div>
           
           <div class="row">
             <input type="submit" value="Submit" onclick="myfunction()">
@@ -183,10 +174,12 @@ input[type=submit] {
     <script>
       function myfunction()
       {
-      
-          document.getElementById('opening').submit();
-          document.getElementById('opening').reset();
+        console.log("P");
+        
+          document.getElementById('portfolio').submit();
+          document.getElementById('portfolio').reset();
       }
     </script>
+    
 </body>
 </html>

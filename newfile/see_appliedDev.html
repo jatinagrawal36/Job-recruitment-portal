@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Applied User</title>
+    <style>
+        body {
+            background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: rgb(30 104 83);
+            font-family: Arial;
+        }
+
+        #btn1 {
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px;
+        }
+
+        #btn3 {
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px;
+            float: right;
+
+        }
+
+        .btn {
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        .btn1 {
+            background: linear-gradient(rgb(86 111 87), rgb(16 211 166));
+            color: white;
+            margin: 10px;
+            font-size: 25px;
+
+        }
+        .btn2{
+            background: linear-gradient(rgb(255 0 229), rgb(16 211 166));
+            color: white;
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        #UL {
+            font-size: 25px;
+
+        }
+
+        #heading {
+            text-align: center;
+            background-color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <form action="/company" method="post">
+            <button type="submit" id="btn1" formmethod="GET">Home</button>
+            <button formaction="/logout-comp" formmethod="get" type="submit" id='btn3'>Logout</button>
+        </form>
+    </div>
+    <div>
+        <h3 style="font-size: 30px;text-align: center;">Total List Of Devs Applied For Diff. Jobs</h3>
+        <div id="UL"></div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        var e = decodeURIComponent(getCookie('gmail_comp'));
+        var e1 = decodeURIComponent(getCookie('CompName'));
+        
+        $(document).ready(function (){
+            $.post('/get_allapplieduser_comp', { e }, async ({ msg }) => {
+                if (msg) {
+                    for (var i = 0; i < msg.length; i++) {
+                        var data = msg[i];
+                        let list = $('<ul>')
+                        var heading = $('<h2 id="heading">');
+                        heading.text(msg[i].jobName);
+                        $('#UL').append(heading);
+                        for (var j = 0; j < msg[i].appliedDev.length; j++) {
+                            var user_email = msg[i].appliedDev[j];
+                            var msg_1;
+                            await $.post('/find_useremail_appliedDev', { user_email }, ({ msg1 }) => {
+                                msg_1 = msg1;
+                            })
+                            let k = 0;
+                            if (msg[i].accepted.length != 0) {
+                                for (k = 0; k < msg[i].accepted.length; k++) {
+                                    if (msg[i].appliedDev[j] == msg[i].accepted[k])
+                                        break;
+                                }
+                            }
+                            if (k < msg[i].accepted.length) {
+                                let form=$('<form action="/show_portfolio_appliedDev" method="POST">');
+                                var list1 = $('<li>');
+                                let user_name = $('<button/>', {
+                                    text: msg_1.name,
+                                    id: "devname" + i + j,
+                                    type:"submit",
+                                    class: "btn1"
+                                });
+                                let input=$('<input type="hidden" name="email" id="hidden" value='+msg[i].appliedDev[j]+'>');
+                              //  $('#hidden').value(msg[i].appliedDev[j]);
+                                let hidden= $('<button/>', {
+                                    text: "Hidden_score "+msg_1.hiddenScore,
+                                    id: "hiddenscore" + i + j,
+                                    click: function () {
+                                        $.prop('disabled',true);
+                                    },
+                                    class: "btn2"
+                                });
+                                form.append(input);
+                                form.append(user_name);
+                                
+                                list1.append(form);
+                                list1.append(hidden);
+                                list1.append("ACCEPTED");
+                                list.append(list1);
+                            }
+                            else {
+                                k = 0;
+                                if (msg[i].rejected.length != 0) {
+                                    for (k = 0; k < msg[i].rejected.length; k++) {
+                                        if (msg[i].appliedDev[j] == msg[i].rejected[k])
+                                            break;
+                                    }
+                                }
+                                if (k == msg[i].rejected.length) {
+                                    var list1 = $('<li>');
+                                        let form=$('<form action="/show_portfolio_appliedDev" method="POST">');
+                                    let user_name = $('<button/>', {
+                                        text: msg_1.name,
+                                        id: "devname" + j,
+                                        name:"devname"+i,
+                                        type:"submit",
+                                        class: "btn1"
+                                    });
+                                    let input=$('<input type="hidden" name="email" id="hidden" value='+msg[i].appliedDev[j]+'>');
+                            
+                                    let accpeted = $('<button/>', {
+                                        text: "Accept",
+                                        id: "accept" + j,
+                                        name:'accept'+i,
+                                        click: function () {
+                                            $.post('/accepted_request', { email: msg[this.name.substr(6)].appliedDev[this.id.substr(6)], id: msg[this.name.substr(6)]._id }, ({ msg2 }) => {
+                                                location.reload();
+                                            });
+
+                                        },
+                                        class: "btn"
+                                    });
+                                    let rejected = $('<button/>', {
+                                        text: "Reject",
+                                        id: "reject" + j,
+                                        name: "reject"+i,
+                                        click: function () {
+                                            $.post('/rejected_request', { email: msg[this.name.substr(6)].appliedDev[this.id.substr(6)], id: msg[this.name.substr(6)]._id }, ({ msg2 }) => {
+                                                location.reload();
+                                            });
+                                        },
+                                        class: "btn"
+                                    });
+
+                                    let hidden= $('<button/>', {
+                                    text: "Hidden_score "+msg_1.hiddenScore,
+                                    id: "hiddenscore" + i + j,
+                                    click: function () {
+                                        $.prop('disabled',true);
+                                    },
+                                    class: "btn2"
+                                });
+                                form.append(input)
+                                form.append(user_name);
+
+                                    list1.append(form);
+                                    list1.append(hidden);
+                                    list1.append(accpeted);
+                                    list1.append(rejected);
+                                    list.append(list1);
+                                }
+                            }
+                        }
+                        $('#UL').append(list);
+                    }
+                }
+            })
+
+        });
+        
+
+    </script>
+</body>
+
+</html>

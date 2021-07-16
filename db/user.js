@@ -18,7 +18,19 @@ const schema=new mongo.Schema({
         unique: true,
         required:true
     },
-    subscribed:[String]
+    subscribed:[String],
+    isFirsttime:{
+        type:Boolean,
+        default:false
+    },
+    hiddenScore:{
+        type:Number,
+        default:0
+    },
+    loginTime:{
+        type:Date,
+        default:Date.now
+    }
 })
 const Recent3=new mongo.model('Recent3',schema);
 module.exports=Recent3; 

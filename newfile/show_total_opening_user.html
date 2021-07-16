@@ -63,18 +63,16 @@
                     return c.substring(name.length, c.length);
                 }
             }
-           
             return "";
         }
-    
         function myfunction() {
             var e = decodeURIComponent(getCookie('gmail'));
-            $.post('/get_subscribed_opening', { name: e }, async ({ msg }) => {
+            $.post('/get_all_opening', { name: e }, ({ msg }) => {
                 if (msg == 'No Opening') {
 
                 }
                 else {
-                   
+
                     for (var i = 0; i < msg.length; i++) {
                         var data = msg[i];
 
@@ -86,8 +84,7 @@
                                   check='found';
                                   break;
                               }
-                          } 
-                          
+                          }             
                         list[i] = data.companyName;
                         var comapanyName = $('<li id="name' + i + '">');
                         var jobname = $('<p class="jobname">');
@@ -97,18 +94,10 @@
                         let Apply = $('<button/>', {
                             text: check=='found'?'Applied':'Apply',
                             id: 'apply_btn_' + i,
-                            name:'apply_btn_'+i,
                             class: 'apply_btn',
-                            click: async function(){
-                                portfolio_find= await checkfunction();
-                                if(!portfolio_find)
-                                {
-                                    alert("Plz Make Portfolio first then apply.");
-                                }
-                                else if($(this).text()=='Apply')
-                                $.post('apply_job_user',{id:msg[this.name.substr(10)]._id},(msg1)=>{
-                                    $(this).text('Applied');
-                                })
+                            click:function(){
+                                if($(this).text()=='Apply')
+                                alert("Please Subscribe this company first Then apply from recommended tab");
                                 else
                                 {
                                     $(this).prop('disabled',true);
@@ -152,17 +141,6 @@
 
             }
         }
-        checkfunction= async()=>{
-
-            var a;
-            var e = decodeURIComponent(getCookie('gmail'));
-            await $.post('portfolio_find_user',{e},async ({msg6})=>{
-                       a=await msg6;
-                       
-                    })
-        return a;
-        }
-        
 
     </script>
 </body>

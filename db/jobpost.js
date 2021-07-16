@@ -10,11 +10,11 @@ const JobPostSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    jobName:{
+    jobRole:{
         type:String,
         required:true
     },
-    jobRole:{
+    jobName:{
         type:String,
         required:true
     },
@@ -33,7 +33,10 @@ const JobPostSchema=new mongoose.Schema({
     isOpen:{
         type:Boolean,
         required:true
-    }
+    },
+    appliedDev:[String],
+    rejected:[String],
+    accepted:[String]
 })
 
 const JobPost = mongoose.model('JobPost',JobPostSchema);

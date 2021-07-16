@@ -28,7 +28,7 @@
 				<button type="submit" class="submit-btn">Log In</button>
 			</form>
 
-			<form id="register" class="input-group" onsubmit="sendotp(event.preventDefault())">
+			<form id="register" class="input-group" onsubmit="sendotp(event.preventDefault())" autocomplete="off">
 				<input type="text" class="input-field" placeholder="name" name="name" id="reg_name" required />
 				<input type="email" class="input-field" placeholder="Enter Email" name="email" id="reg_email"  required />
 				<input type="password" class="input-field" placeholder="Enter Password" name="password" id="reg_pass"  required />
@@ -37,7 +37,7 @@
 				<input type="checkbox" class="check-box" /><span>I agree to the terms & conditions</span>
 				<button type="submit" class="submit-btn">Register</button>
 			</form>
-			<form id = "otp" onsubmit="verifyOtp()">
+			<form id = "otp" onsubmit="verifyOtp()" autocomplete="off">
 				<input type="text" placeholder="otp" id="input_otp" />
 				<button type="submit">Verify</button>
 			</form>
@@ -71,12 +71,12 @@
 			email = $("#reg_email").val();
 			password = $("reg_pass").val();
 			$.post('/send-otp-user',{name:$("#reg_name").val(),email:$("#reg_email").val(),password:$("#reg_pass").val(),confirm_password:$("#reg_con_pass").val()},({msg})=>{
-				console.log(msg);
 				if(msg == 'otp send to email'){
 					$('#register').hide();
 					$('#otp').show();
 				}
 				else{
+					if(msg=='NO')
 					alert("Email already exists");
 					window.location="/user";
 				}

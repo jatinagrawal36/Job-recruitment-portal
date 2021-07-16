@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <style>
+        body{
+            background:linear-gradient(rgb(75, 82, 184), rgb(224, 169, 169));
+        }
+        #division{
+            border:2px; border-color: #793368;
+            margin-top: 15px;
+        }
+        #list{
+            background-color: #793368; color:white;
+            font-size: 25px;
+        }
+        #para{
+            background-color: #793368; color:white;
+            font-size: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onload="myfunction()">
+    <ol id="UL">  
+    </ol>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    var e = decodeURIComponent(getCookie('gmail'));
+    
+    function myfunction()
+    {
+        $.post('get_subscribed_opening',{name:e},({msg})=>{
+            if(msg=='No Opening'||msg.length==0)
+            {
+                var division=$('<div id="division">');
+                    var para=$('<p id="para">');
+                        para.text("OPPS :(");
+                var list=$('<p id="list">');
+                list.text("No notifications ,Plz make/Update Resume, Subscribe more companies and apply to jobs.");
+                division.append(para);
+                division.append(list);
+                $('#UL').append(division);            
+            }
+            else{
+                for(var i=msg.length-1;i>=0;i--)
+                {
+                    
+                var division=$('<div id="division">');
+                var list=$('<li id="list">');
+                list.text(msg[i].companyName+" has opened a drive of "+msg[i].jobName+" for "+msg[i].jobRole+" profile and they want "+msg[i].expReq+" expereience for this job. ");
+                division.append(list);
+                $('#UL').append(division);
+                    
+                }
+            }
+        })
+    }
+
+    </script>
+</body>
+</html>

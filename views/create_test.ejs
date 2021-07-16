@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test</title>
+    <style>
+        body{
+            background: linear-gradient(white,rgb(92 172 136));
+
+        }
+        #submit{
+            text-align: center;
+            display: block;
+            margin: auto; 
+             width: 100px;
+            height: 30px;
+            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+            color: white;
+            border-radius: 5px;
+        }
+        #DIV{
+            background: bisque;
+            border: 10px solid rebeccapurple;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 20px;
+
+        }
+        #accepted_name{
+            word-wrap: break-word;
+        }
+        #textarea{
+            display: block;
+            margin: auto;
+        }
+        #heading{
+            background: bisque;
+            border: 10px solid rebeccapurple;
+           
+    width: 40%;
+    display: block;
+    margin: auto;
+    height: 70px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="heading">
+     <h1 style="text-align: center;">Create Test</h1>
+    </div>
+     <div id="DIV">
+        <h2 style="text-align: center;">List Of Accepted Users</h2>
+        <h3 id="accepted_name" style="text-align: center;"><%= accepted_name %></h3>
+     </div>
+    
+     <div>
+         <h1 style="text-align:center;">Two Modes For Creating Test</h1> 
+    </div>
+    <div>
+        <h2>1. Create test from Google Forms</h2>
+        <a style="margin-left: 20px;font-size: 20px;" href="https://docs.google.com/">click for test generation</a>
+    </div>
+    <div>
+        <h2>1. Create Test from HackerEarth</h2>
+        <a style="margin-left: 20px;font-size: 20px;" href="https://docs.google.com/">click for test generation</a>
+    </div>
+
+    <div  style="background: rgb(173, 209, 137); width:60%;display: block;margin: auto; border: 10px solid rebeccapurple;">
+        <h2 style="text-align: center;">Send Test Link to All dev</h2>
+        <div>
+        <form action="/send_test_email" method="POST">
+            <input type="hidden" name="hidden" id="hidden" value= <%=id%> >
+            <textarea name="link" rows="4" cols="50" placeholder="Copy the test link here" id="textarea"></textarea>
+            <br>
+       <button type="submit" id="submit">
+           Send Mail
+       </button> 
+        </form>
+    </div>
+        
+    </div>
+</body>
+</html>

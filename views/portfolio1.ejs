@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+         body{ 
+            background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+       
+        }
+        input[type=text], select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+       ;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Style the label to display next to the inputs */
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: grid;
+  margin: auto;
+}
+
+/* Style the container */
+.container {
+  border-radius: 5px;
+  background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169));
+        padding: 20px;
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+  font-size: 40px;
+  
+  color:rgb(173, 255, 80);
+}
+
+/* Floating column for inputs: 75% width */
+.col-75 {
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+  font-size: 12px;
+}
+.col-100{
+ text-align: center;
+ margin-top: 6px;
+ font-size: 40px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+    </style>
+</head>
+<body>
+      <h1 style="font-size: 40px;text-align: center;">Portfolio of <%=name%></h1>
+     <div class="container">
+       
+      <div class="row">
+        <div class="col-25">
+          <label for="name">Name </label>
+        </div>
+        <div class="col-75">
+          <h1><%=name %></h1>
+        </div>
+      </div>
+
+        <div class="row">
+            <div class="col-25">
+              <label for="email">Email </label>
+            </div>
+            <div class="col-75">
+              <h1><%=email %></h1> </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-25">
+              <label for="bio">Bio</label>
+            </div>
+            <div class="col-75">
+              <h1><%=bio %></h1> </div>
+            </div>
+          </div>
+
+          <div class="col-100">
+            <label for="skill_1">Top 3 Skills </label>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="skill_1">Skill_1 </label>
+            </div>
+            <div class="col-75">
+              <h1><%=skill_1 %></h1> </div>
+           
+            </div>
+          </div>
+
+         <div class="row">
+            <div class="col-25">
+              <label for="skill_2">Skill_2 </label>
+            </div>
+            <div class="col-75">
+              <h1><%=skill_2 %></h1>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="skill_3">Skill_3 </label>
+            </div>
+            <div class="col-75">
+            <h1><%=skill_3 %></h1>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-25">
+              <label for="experience">Experience</label>
+            </div>
+            <div class="col-75">
+            <h1><%=experience%></h1>    
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="college">College</label>
+            </div>
+            <div class="col-75">
+              <h1><%=college%></h1> </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="degree">Degree</label>
+            </div>
+            <div class="col-75">
+              <h1><%=degree%></h1> </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="last_job">Last Job (If any)</label>
+            </div>
+            <div class="col-75">
+              <h1><%=last_job%></h1> </div>
+          </div>
+          
+      </div> 
+</body>
+</html>

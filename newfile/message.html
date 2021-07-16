@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Portal</title>
+    
+    <style>
+        .logo{
+    display: block;
+    margin: auto;
+}
+body{
+    background-image: linear-gradient(white,rgb(55, 60, 112));
+    height: auto;
+}
+.container{
+    background-color: rgb(13 174 187);
+    height: 60vh;
+    max-width: 500px;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+.form{
+    display: block;
+    margin: auto;
+    text-align: center;
+    max-width: 885px;
+    margin-top: 5px;
+}
+#text1{
+    width: 49%;
+    border: 2px solid black;
+    border-radius: 0px;
+}
+#button{
+        border: 2px solid black;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+
+.left{
+    width: 95%;
+    clear: both;
+    background-color: rgb(167, 154, 154);
+    border: 2px solid black;
+    border-radius: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.right
+{
+    width: 95%;
+    clear: both;
+    background-color: rgb(167, 154, 154);
+    border: 2px solid black;
+    border-radius: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.text{
+    word-wrap: break-word;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: 600;
+
+}
+.meta{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <img class="logo" src="newfile/home.jpg" width="70px" alt="">
+    </nav>
+    <div class="container">
+
+</div>
+<div class="form">
+    <form action="#" id="send_container" autocomplete="off">
+        <input type="text" name="text" id="text1">
+        <button type="submit" id="button">
+            Send
+        </button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src= "../node_modules/socket.io/client-dist/socket.io.js"></script>
+
+    <script>
+function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    var e = decodeURIComponent(getCookie('gmail'));
+        var e1 = decodeURIComponent(getCookie('UserName'));
+
+const socket=io();
+const form=document.getElementById('send_container');
+const messegeArea=document.querySelector('.container');
+const text=document.getElementById('text1');
+
+var time_format=new Date();
+var minute=time_format.getMinutes();
+                 var hour=time_format.getHours();
+                 var a='AM'
+                 if(hour>=12)
+            {
+                hour=hour-11;
+                a='PM'
+            }
+            
+            if(hour<10)
+            {
+                hour='0'+hour;
+            }
+            if(minute<10)
+            {
+                minute='0'+minute;
+            }
+            var year = time_format.getFullYear();
+var month = time_format.getMonth()+1;
+var dt = time_format.getDate();
+
+if (dt < 10) {
+  dt = '0' + dt;
+}
+if (month < 10) {
+  month = '0' + month;
+}
+var final_time=hour+":"+minute+" "+a+" "+dt+"-"+month+"-"+year;
+ 
+form.addEventListener('submit',err=>{
+    err=event.preventDefault();
+    const msg=text.value;
+    if(msg)
+    {
+    append({name:"You",msg:msg},'right');
+    socket.emit('send',{msg:msg,name:e1});
+    }
+    text.value='';
+
+})
+//console.log("P");
+function append(data,position){
+    var newMsg=document.createElement('div');
+   
+    newMsg.classList.add('messege',position);
+    newMsg.innerHTML=`<p class="meta">${data.name}  <br><span>${final_time}</span></p>
+    <p class="text"> 
+        ${data.msg}   
+    </p>`;
+    
+    messegeArea.append(newMsg);
+
+    messegeArea.scrollTop = messegeArea.scrollHeight;
+}
+
+function solve(msg)
+{
+    for(var i=0;i<msg.length;i++)
+    {
+        if(msg[i].sender_msg)
+        {
+            
+            time_format=new Date(msg[i].date_time);
+             minute=time_format.getMinutes();
+                 hour=time_format.getHours();
+                 a='AM'
+            if(hour>=12)
+            {
+                hour=hour-12;
+                a='PM'
+            }
+            if(hour<10)
+            {
+                hour='0'+hour;
+            }
+            if(minute<10)
+            {
+                minute='0'+minute;
+            }
+            year = time_format.getFullYear();
+month = time_format.getMonth()+1;
+dt = time_format.getDate();
+
+if (dt < 10) {
+  dt = '0' + dt;
+}
+if (month < 10) {
+  month = '0' + month;
+}
+var final_time=hour+":"+minute+" "+a+" "+dt+"-"+month+"-"+year;
+        var newMsg=document.createElement('div');
+        newMsg.innerHTML=`<p class="meta">${msg[i].sender_name}  <br><span>${final_time}</span></p>
+    <p class="text"> 
+        ${msg[i].sender_msg}   
+    </p>`;
+    if(msg[i].sender_name==e1)
+    {
+       
+        newMsg.innerHTML=`<p class="meta">You<br><span>${final_time}</span></p>
+    <p class="text"> 
+        ${msg[i].sender_msg}   
+    </p>`;
+    newMsg.classList.add('messege','right');
+
+    }
+    else
+    {
+    newMsg.classList.add('messege','left');
+    }
+
+    messegeArea.append(newMsg);
+    messegeArea.scrollTop = messegeArea.scrollHeight;
+    }
+}
+}
+
+socket.emit('user-connected',e1);
+
+socket.on('new_user_connected',user1=>{
+    solve(user1);
+})
+socket.on('received',(data)=>{
+    append({name:data.name,msg:data.msg},'left');
+})
+
+
+
+    </script>
+</body>
+</html>

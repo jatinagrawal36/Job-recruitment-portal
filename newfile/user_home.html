@@ -2,173 +2,293 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon</title>
-    <style>
-        body {
-            background: linear-gradient(rgb(75, 82, 184), rgb(224, 169, 169));
-        }
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon</title>
+<style>
+    body {
+        background: linear-gradient(rgb(75, 82, 184), rgb(224, 169, 169));
+    }
 
-        .navbar {
-            overflow: hidden;
-            font-family: Arial;
-        }
+    .navbar {
+        overflow: hidden;
+        font-family: Arial;
+    }
 
-        #btn1 {
-            width: 100px;
-            height: 40px;
-            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            border-radius: 5px ;
+    #btn1 {
+        width: 70px;
+        height: 40px;
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        border-radius: 5px ;
 
-        }
+    }
 
-        #btn2 {
-            width: 130px;
-            height: 40px;
-            
-            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            border-radius: 5px ;
-        }
+    #btn2 {
+        width: 110px;
+        height: 40px;
+        
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        border-radius: 5px ;
+    }
+    #btn4 {
+        width: 110px;
+        height: 40px;
+        
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        border-radius: 5px ;
+    }
+    #btn5 {
+        width: 110px;
+        height: 40px;
+        
+        background: linear-gradient(rgb(31 246 241), rgb(16 202 211));
+        color: #943434;
+        border-radius: 5px ;
+    }
+    #btn6
+    {
+        width: 110px;
+        height: 40px;
+        font-size: 15px;
+        background: linear-gradient(rgb(246 31 31), rgb(211 196 16));
+        color: white;
+        border-radius: 5px ;
+    }
 
-        #btn3 {
-            width: 100px;
-            height: 40px;
-          
-            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            border-radius: 5px;
-            float: right;
-        }
+    #btn3 {
+        width: 70px;
+        height: 40px;
+        
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        border-radius: 5px;
+        float: right;
+    }
 
-        .welcome {
-            color: white;
-        }
+    .welcome {
+        color: white;
+    }
 
-        .subs_btn {
-            
-            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            margin: 10px;
-            font-size: 18px;
-        }
+    .subs_btn {
+        
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        margin: 10px;
+        font-size: 18px;
+    }
 
-        .unsubs_btn {
-           
-            background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
-            color: white;
-            margin: 10px;
-            font-size: 18px;
-        }
-    </style>
+    .unsubs_btn {
+        
+        background: linear-gradient(rgb(75, 184, 81), rgb(211, 16, 16));
+        color: white;
+        margin: 10px;
+        font-size: 18px;
+    }
+    #barwrap { margin-bottom: 20px;    
+     }
+
+
+.bar {
+   
+    overflow: scroll;
+padding: 8px;
+padding-top: 0px;
+background-color: rgba(0, 0, 0, 0.5);
+
+/* set it at will according to your message's length in small devices */
+max-height: 100px; 
+position: fixed;
+top: 0px;
+left: 0px;
+right: 0px;
+color: #f5f5f5;
+border-bottom: thick ridge rgba(0, 0, 0, 0.5);
+-webkit-box-shadow: 0px 2px 13px 0.5px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 2px 13px 0.5px rgba(0, 0, 0, 0.3);
+display: none;
+z-index: 3008;
+
+}
+
+#head-image {
+margin-right: 1%;
+position: relative;
+top: 8px;
+}
+
+#text { 
+    position: relative;
+    font-size: 15px;
+}
+
+
+#ok {
+float: right;
+margin-right: 100px;
+font-size: 25px;
+}
+
+#ok a {
+color: #3EAAEE;
+text-decoration: none;
+}
+
+</style>
 </head>
 
 <body onload="myfunction(event.preventDefault())">
 
-    <div class="navbar">
-            
-        <form action="/home" method="post">
-            <button type="submit" id="btn1" formmethod="get" formaction="/user">Home</button>
-            <button formaction="/show_opening_user" formmethod="get" type="submit" id='btn2'>New Openings</button>
-            <button formaction="/logout-user" formmethod="GET" type="submit" id='btn3'>Logout</button>
-        </form>
+<div class="navbar">
+        
+    <form action="/home" method="post">
+        <button type="submit" id="btn1" formmethod="get" formaction="/user">Home</button>
+        <button formaction="/show_opening_user" formmethod="get" type="submit" id='btn2'>Recommended</button>
+        <button formaction="/show_total_opening_user" formmethod="get" type="submit" id='btn4' >Total Openings</button>
+        <button formaction="/portfolio" formmethod="get" type="submit" id='btn4'>Portfolio</button>
+        <button formaction="/status_user" formmethod="GET" type="submit" id='btn4'>Statistics</button>
+        <button formaction="/notification_user" formmethod="GET" type="submit" id='btn5'>Notifications</button>
+        <button formaction="/chat_portal_user" formmethod="GET" type="submit" id='btn6'>Chat Portal</button>
+        <button formaction="/logout-user" formmethod="GET" type="submit" id='btn3'>Logout</button>
+    </form>
+</div>
 
-    </div class='welcome'>
-    <h1 id="username"></h1>
-    <div>
-        <ol class="ol_data"></ol>
-    </div>
+<h1 id="username"></h1>
+<div>
+    <ol class="ol_data"></ol>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript">
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    var e = decodeURIComponent(getCookie('gmail'));
+        var e1 = decodeURIComponent(getCookie('UserName'));
+    var totalsubscribed={},totalsubscribed1={};
+
+
+    $.post('/get_subscribed', {e},async ({totalsubscribed1})=>{
+                totalsubscribed=await totalsubscribed1;
+        });
+
+
+    function getname(name){
+        if(totalsubscribed.length==0)
+        return 'not found';
+        for(var i=0;i<totalsubscribed.length;i++)
+        {
+            // console.log(totalsubscribed[i]);
+            if(totalsubscribed[i]==name)
+            {
+                return 'found';
+            }
+        }
+        return 'not found';
+    }
+    function myfunction() {
+        
+        $('#username').text("Welcome, " + e1);
+        
+        $.post('/get_subscribed_opening',{name:e},({msg})=>{
+
+            if(msg)
+            {
+                for(var i=0;i<msg.length;i++)
+                {
+                    var list=$('<li id="list">');
+                        list.text(msg[i].companyName+" has opened the drive for "+msg[i].jobName+" in "+msg[i].jobRole+" role "+" for "+msg[i].expReq);
+                        $('#text').append(list);
                 }
             }
-            return "";
-        }
+        
+        })
+        
+        
+        $.post('/company-list', { email: e }, ({ msg }) => {
+            if (msg) {
+                for (i = 0; i < msg.length; i++) {
+                    var data = msg[i];
+                    var name1 = data.name;
+                    var findName_subs_comp=getname(data.email);
+                    let companyData = $('<li class="companydata" style="color:white;font-size:40px;">');
+                    let subscribe = $('<button/>', {
+                        text: (findName_subs_comp=="found")?'Subscribed':'Subscribe',
+                        //text:'Subscribe',
+                        
+                        id: 'subs_btn_' + i,
+                        click: function () {
+                            if ($(this).text() == "Subscribe") {
+                                name1= msg[this.id[this.id.length - 1]].name ;
+                                $.post('/subscribeClick', { name1 }, ({ msg1 }) => {
+                                    if (msg1 == "subscribed") {
+                                        $(this).text(msg1);
+                                        $("#un" + this.id).text("Unsubscribe");
+                                        $("#un" + this.id).prop('disabled', false);
+                                    
+                                    }
+                                });
+                            } else {
+                                $(this).prop('disabled', true);
+                            }
+                        },
+                        class: 'subs_btn'
+                    });
 
-        function myfunction() {
-            var e = decodeURIComponent(getCookie('gmail'));
-            var e1 = decodeURIComponent(getCookie('UserName'));
-            $('#username').text("Welcome, " + e1);
+                    let unsubscribe = $('<button/>', {
+                        text: (findName_subs_comp=='not found')?'Unsubscribed':'Unsubscribe',
+                        // text: 'Unsubscribe',
+                        
+                        id: 'unsubs_btn_' + i,
+                        click: function () {
+                            if ($(this).text() == "Unsubscribe") {
+                                name1= msg[this.id[this.id.length - 1]].name ;
+                                $.post('/unsubscribeClick', { name1 }, ({ msg1 }) => {
+                                    if (msg1 == "unsubscribed") {
+                                        $(this).text(msg1);
+                                        $('#subs_btn_' + this.id[this.id.length - 1]).text("Subscribe");
+                                        $('#subs_btn_' + this.id[this.id.length - 1]).prop('disabled', false);
+                                    }
+                                });
+                            }
+                            else {
+                                $(this).prop('disabled', true);
+                            }
+                        },
+                        class: 'unsubs_btn'
+                    });
+                    companyData.text(data.name);
+                    $('.ol_data').append(companyData);
+                    $('.ol_data').append(subscribe);
+                    $('.ol_data').append(unsubscribe);
 
-            $.post('/company-list', { email: e }, ({ msg }) => {
-                if (msg) {
-                    for (i = 0; i < msg.length; i++) {
-                        var data = msg[i];
-                        var name1 = data.name;
-                        let companyData = $('<li class="companydata" style="color:white;font-size:40px;">');
-                        let subscribe = $('<button/>', {
-                            text: "subscribe",
-                            id: 'subs_btn_' + i,
-                            click: function () {
-                                if ($(this).text() == "subscribe") {
-                                    name1= msg[this.id[this.id.length - 1]].name ;
-                                    $.post('/subscribeClick', { name1 }, ({ msg1 }) => {
-                                        console.log(name1);
-                                        if (msg1 == "subscribed") {
-                                            $(this).text(msg1);
-                                            $("#un" + this.id).text("Unsubscribe");
-                                            $("#un" + this.id).prop('disabled', false);
-                                       
-                                        }
-                                    });
-                                } else {
-                                    $(this).prop('disabled', true);
-                                }
-                            },
-                            class: 'subs_btn'
-                        });
-
-                        let unsubscribe = $('<button/>', {
-                            text: "unsubscribed",
-                            id: 'unsubs_btn_' + i,
-                            click: function () {
-                                if ($(this).text() == "Unsubscribe") {
-                                    name1= msg[this.id[this.id.length - 1]].name ;
-                                    $.post('/unsubscribeClick', { name1 }, ({ msg1 }) => {
-                                        if (msg1 == "unsubscribed") {
-                                            $(this).text(msg1);
-                                            $('#subs_btn_' + this.id[this.id.length - 1]).text("subscribe");
-                                            $('#subs_btn_' + this.id[this.id.length - 1]).prop('disabled', false);
-                                        }
-                                    });
-                                }
-                                else {
-                                    $(this).prop('disabled', true);
-                                }
-                            },
-                            class: 'unsubs_btn'
-                        });
-                        companyData.text(data.name);
-                        $('.ol_data').append(companyData);
-                        $('.ol_data').append(subscribe);
-                        $('.ol_data').append(unsubscribe);
-
-                    }
                 }
-            })
-        }
-
-        function Home(){
-            var e = decodeURIComponent(getCookie('gmail'));
-            $.post('/home',{e},({msg})=>{
-                
-            })
-        }
-    </script>
+            }
+        })
+    }
+    function Home(){
+        var e = decodeURIComponent(getCookie('gmail'));
+        $.post('/home',{e},({msg})=>{    
+        })
+    }
+   
+</script>
 </body>
 
 </html>

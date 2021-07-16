@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics_DEV</title>
+    <style>
+        body{
+            background: linear-gradient(rgb(130, 136, 207), rgb(224, 169, 169))
+        }
+ table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid black;
+}
+#TR{
+    color: #f7ef00;
+    font-size: 20px;
+    text-align: center;
+}
+    </style>    
+</head>
+<body onload="myfunction(event.preventDefault())">
+    <h1 style="text-align: center;">Total Applied Company With Status</h1>
+    <table style="width:100%" id="TABLE">
+        <tr style="color: rgb(231 39 39); font-size: 30px;">
+            <th>Company Name</th>
+            <th>Job Name</th>
+            <th>Job Role</th>
+            <th>Status</th>
+            
+        </tr>
+      </table>
+
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script type="text/javascript">
+      
+      function getCookie(cname) {
+          var name = cname + "=";
+          var ca = document.cookie.split(';');
+          for (var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+              }
+          }
+          return "";
+      }
+      var e = decodeURIComponent(getCookie('gmail'));
+          var e1 = decodeURIComponent(getCookie('UserName'));
+      function myfunction(){
+          $.post('/all_appliedcomp_user',{e},({msg})=>{
+              if(msg)
+              {
+                    for(var i=0;i<msg.length;i++)
+                    {
+                        var j;
+                        j=0;
+                        var status="pending";
+                        for(j=0;j<msg[i].accepted.length;j++)
+                        {
+                            if(msg[i].accepted[j]==e)
+                            break;
+                        }
+                        if(j<msg[i].accepted.length)
+                        {
+                            status="Accepted";
+                        }
+                        else{
+                            for(j=0;j<msg[i].rejected.length;j++)
+                        {
+                            if(msg[i].rejected[j]==e)
+                            break;
+                        }
+                        if(j<msg[i].rejected.length)
+                        {
+                            status="Rejected";
+                        }
+                        }
+                        let td1=$('<td id="td1'+i+'">')
+                        let td2=$('<td id="td2'+i+'">')
+                        let td3=$('<td id="td3'+i+'">')
+                                let td4=$('<td id="td4'+i+'">')
+                            td1.text(msg[i].companyName);
+                            td2.text(msg[i].jobName);
+                            td3.text(msg[i].jobRole);
+                            td4.text(status);
+                            var newTR=$('<tr id="TR">');
+                            newTR.append(td1);
+                            newTR.append(td2);
+                           newTR.append(td3);
+                           newTR.append(td4);
+                            $('#TABLE').append(newTR);
+                            
+
+                    }
+
+              }
+          })
+          
+      } 
+  
+      </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #ace88b;
+        }
+        #button{
+            color: black;
+            background-color: #6847ff;
+            width: 100px;
+            height: 35px;
+            display: block;
+            margin: auto;
+            font-size: 20px;
+            border-radius: 5px;
+            }
+    </style>
+</head>
+<body onload="myfunction(event.preventDefault())">
+    <h3 style="text-align: center;"> <text style="border: 5px solid rgb(255 30 0);">Timer <text id="timer">5:00</text></text></h3>
+    <h1 style="text-align: center;">This is very important quiz for you all as score of this quiz will be shown to companies.</h1>
+    
+    <form action="/question_to_userhome" method="post" id="quiz">
+        <ol id="OL">
+            
+        </ol>
+        <input type="submit" value="submit" id="button" >
+     </form>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+   
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    /*var c;
+    async function foo(){
+            var e1 = decodeURIComponent(getCookie('gmail'));
+            await $.post('/get_timeremaining_quiz',{e1},({msg})=>{
+           
+            var c1=new Date();
+            var c2=new Date(''+msg);
+            
+        //    c1= c1.toISOString();
+        //    c2=c2.toISOString();
+          
+            //c1=(c1-c2)/(1000*60);
+            console.log((c1.getTime()-c2.getTime())/(1000));
+                return (c1.getTime()-c2.getTime())/(1000*60);
+        })
+    }*/
+    var e = decodeURIComponent(getCookie('gmail'));
+        var e1 = decodeURIComponent(getCookie('UserName'));
+   async function myfunction(){
+       
+   
+        /*c=await foo();
+        console.log(c);*/
+    
+        $.post('/get_questions',{e},({msg})=>{
+           
+    var p=-1;
+            for(var i=0;i<msg.length;i++)
+            {
+                p++;
+                if(p==4)
+                {
+                    p=0;
+                }
+                var heading=$('<h3>');
+                heading.text(msg[i].question);
+                var div1=$('<div class="radio'+i+'">');
+                    var div2=$('<div class="radio'+i+'">');
+                        var div3=$('<div class="radio'+i+'">');
+                            var div4=$('<div class="radio'+i+'">');
+
+                    var input1=$('<input type="radio" name="question'+i+'" value="0">');
+                    var input2=$('<input type="radio" name="question'+i+'" value="1">');
+                    var input3=$('<input type="radio" name="question'+i+'" value="2">');
+                    var input4=$('<input type="radio" name="question'+i+'" value="3">');
+                   var list=$('<li>');
+
+                    if(p==0)
+                    {
+                    input1.text(msg[i].correct_answer);
+                    div1.append(input1);
+                    div1.append(msg[i].correct_answer);
+                    input2.text(msg[i].incorrect_answers[0]);
+                    div2.append(input2);
+                    div2.append(msg[i].incorrect_answers[0]);
+                    input3.text(msg[i].incorrect_answers[1]);
+                    div3.append(input3);
+                    div3.append(msg[i].incorrect_answers[1]);
+                    input4.text(msg[i].incorrect_answers[2]);
+                    div4.append(input4);
+                    div4.append(msg[i].incorrect_answers[2]);
+                    
+                    }
+                    else if(p==1)
+                    {
+                        div1.append(input3);
+                        div1.append(msg[i].incorrect_answers[1]);
+                     div2.append(input1);
+                     div2.append(msg[i].correct_answer);
+                     div3.append(input2);
+                     div3.append(msg[i].incorrect_answers[0]);
+                      div4.append(input4);
+                      div4.append(msg[i].incorrect_answers[2]);
+                    }
+                    else if(p==2)
+                    {
+                        div1.append(input2);
+                        div1.append(msg[i].incorrect_answers[0]);
+                    div2.append(input4);
+                    div2.append(msg[i].incorrect_answers[2]);
+                    div3.append(input1);
+                    div3.append(msg[i].correct_answer);
+                    div4.append(input3);
+                    div4.append(msg[i].incorrect_answers[1]);
+                    }
+                    else{
+                        div1.append(input3);
+                        div1.append(msg[i].incorrect_answers[1]);
+                    
+                    div2.append(input1);
+                    div2.append(msg[i].correct_answer);
+                    div3.append(input2);
+                    div3.append(msg[i].incorrect_answers[0]);
+                    div4.append(input4);
+                    div4.append(msg[i].incorrect_answers[2]);
+                    
+                    }
+                    list.append(heading);
+                    
+                    list.append(div1); 
+                    list.append(div2); 
+                    list.append(div3); 
+                    list.append(div4); 
+                    $("#OL").append(list);
+            
+
+            }
+        })
+    }
+    var c=60;
+    var m=4;
+    function timer001(){
+        c--;
+        if(c<1&&m<1)
+        {
+            document.getElementById('quiz').submit();
+            document.getElementById('quiz').reset();
+            
+        }
+
+        else
+        {    
+            
+         if(c>=10)
+            document.getElementById('timer').innerText=m+":"+c;
+         else
+         {
+            document.getElementById('timer').innerText=m+":0"+c;
+             
+         }
+         if(c==0)
+         {
+            m--;
+            c=60;
+         }
+        }
+    }
+    update=setInterval("timer001()",1000);
+    
+   </script>
+</body>
+</html>
